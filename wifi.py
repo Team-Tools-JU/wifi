@@ -12,6 +12,7 @@ def sendLoop():
             bufferReady = False
             data = buffer.pop(0)
             #send to db
+            print(data)
             bufferReady = True
 
 
@@ -19,12 +20,12 @@ def readLoop():
     while True:
         if bufferReady:
             bufferReady = False
-            received_data = ser.read()              #read serial port
+            receivedData = ser.read()              #read serial port
             sleep(0.03)
-            data_left = ser.inWaiting()             #check for remaining byte
-            received_data += ser.read(data_left)
-            decoded_data = received_data.decode("utf-8")
-            buffer.append(decoded_data)
+            dataLeft = ser.inWaiting()             #check for remaining byte
+            receivedData += ser.read(dataLeft)
+            decodedData = receivedData.decode("utf-8")
+            buffer.append(decodedData)
             bufferReady = True
 
 
