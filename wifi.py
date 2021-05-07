@@ -5,6 +5,10 @@ ser = serial.Serial ("/dev/ttyS0", 9600)    #Open port with baud rate
 bufferReady = True
 buffer = []
 
+
+
+
+
 def sendLoop():
     global buffer
     global bufferReady
@@ -13,8 +17,9 @@ def sendLoop():
             if len(buffer):
                 bufferReady = False
                 data = buffer.pop(0)
+                test = data.split(" ")
+                print("vector" + str(test)) #test , remove when db is ready
                 #send to db
-                print(data)
                 bufferReady = True
 
 
@@ -28,7 +33,8 @@ def readLoop():
             sleep(0.03)
             dataLeft = ser.inWaiting()             #check for remaining byte
             receivedData += ser.read(dataLeft)
-            decodedData = receivedData.decode("utf-8")
+            decodedData = str(receivedData.decode("utf-8"))
+            decodedData = decodedData.strip()
             buffer.append(decodedData)
             bufferReady = True
             sleep(0.03)
