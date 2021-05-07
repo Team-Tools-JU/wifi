@@ -3,18 +3,22 @@ from time import sleep
 import threading
 ser = serial.Serial ("/dev/ttyS0", 9600)    #Open port with baud rate
 bufferReady = True
-buffer = []
+buffer = ["hej","hej","hej","hej","hej","hej","hej","hej","hej","hej","hej"]
 
 def sendLoop():
     global buffer
     global bufferReady
     while True:
-        if len(buffer) > 0 and( bufferReady):
-            bufferReady = False
-            data = buffer.pop(0)
-            #send to db
-            print(data)
-            bufferReady = True
+        if bufferReady:
+            if len(buffer):
+                bufferReady = False
+                data = buffer.pop(0)
+                #send to db
+                sleep(0.5)
+                print(data)
+                bufferReady = True
+        else:
+            sleep(0.5)
 
 
 def readLoop():
@@ -23,12 +27,13 @@ def readLoop():
     while True:
         if bufferReady:
             bufferReady = False
-            receivedData = ser.read()              #read serial port
+            #receivedData = ser.read()              #read serial port
             sleep(0.03)
-            dataLeft = ser.inWaiting()             #check for remaining byte
-            receivedData += ser.read(dataLeft)
-            decodedData = receivedData.decode("utf-8")
-            buffer.append(decodedData)
+            #dataLeft = ser.inWaiting()             #check for remaining byte
+            #receivedData += ser.read(dataLeft)
+            #decodedData = receivedData.decode("utf-8")
+            
+            sleep(1)
             bufferReady = True
 
 
