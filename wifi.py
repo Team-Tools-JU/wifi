@@ -1,9 +1,9 @@
-#import serial
+import serial
 from time import sleep
 import threading
-#ser = serial.Serial ("/dev/ttyS0", 9600)    #Open port with baud rate
+ser = serial.Serial ("/dev/ttyS0", 9600)    #Open port with baud rate
 bufferReady = True
-buffer = ["hej","hej","hej","hej","hej","hej","hej","hej","hej","hej","hej"]
+buffer = []
 
 def sendLoop():
     global buffer
