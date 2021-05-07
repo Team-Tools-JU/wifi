@@ -7,8 +7,9 @@ buffer = []
 
 def sendLoop():
     global buffer
+    global bufferReady
     while True:
-        if buffer.count > 0 and bufferReady:
+        if len(buffer) > 0 and( bufferReady):
             bufferReady = False
             data = buffer.pop(0)
             #send to db
@@ -17,6 +18,8 @@ def sendLoop():
 
 
 def readLoop():
+    global buffer
+    global bufferReady
     while True:
         if bufferReady:
             bufferReady = False
@@ -31,7 +34,7 @@ def readLoop():
 
 def setup():
     threading.Thread(target=readLoop,args=())
-    threading.Thread(target=sendLoop,args=())
-
+    sendLoop()
+    
 
 setup()
