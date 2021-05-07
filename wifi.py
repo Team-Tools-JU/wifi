@@ -21,8 +21,6 @@ def sendLoop():
 def readLoop():
     global buffer
     global bufferReady
-    i = 0
-    y = 5
     while True:
         if bufferReady:
             bufferReady = False
@@ -33,6 +31,7 @@ def readLoop():
             decodedData = receivedData.decode("utf-8")
             buffer.append(decodedData)
             bufferReady = True
+            sleep(0.03)
 
 
 def setup():
