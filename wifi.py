@@ -5,6 +5,8 @@ ser = serial.Serial ("/dev/ttyS0", 9600)    #Open port with baud rate
 bufferReady = True
 buffer = []
 
+def sendDataToDb(angle , length, collision):
+    pass
 
 
 
@@ -17,9 +19,12 @@ def sendLoop():
             if len(buffer):
                 bufferReady = False
                 data = buffer.pop(0)
-                test = data.split(" ")
-                print("vector" + str(test)) #test , remove when db is ready
+                dataArr = data.split(" ")
+                angle = dataArr[0]
+                length_mm = dataArr[1]
+                collision = dataArr[2]
                 #send to db
+                sendDataToDb(angle,length_mm,collision)
                 bufferReady = True
 
 
@@ -41,6 +46,9 @@ def readLoop():
 
 
 def setup():
+
+    #SET UP DB connection
+
     t =threading.Thread(target=readLoop,args=())
     t2 = threading.Thread(target=sendLoop,args=())
     t.start()
