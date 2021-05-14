@@ -37,11 +37,13 @@ def sendLoop():
                 bufferReady = False
                 data = buffer.pop(0)
                 dataArr = data.split(" ")
-                angle = dataArr[0]
-                length_mm = dataArr[1]
-                collision = dataArr[2]
-                #send to db
-                sendDataToDb(angle,length_mm,collision)
+                if len(dataArr) == 3:
+                    angle = dataArr[0]
+                    length_mm = dataArr[1]
+                    collision = dataArr[2]
+                    #send to db
+                    sendDataToDb(angle,length_mm,collision)
+                    print(dataArr)
                 bufferReady = True
 
 
