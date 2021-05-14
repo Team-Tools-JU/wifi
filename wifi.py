@@ -7,22 +7,24 @@ bufferReady = True
 buffer = []
 
 firebaseConfig = {
-    apiKey: "AIzaSyCXSY5xD4wyy0H8Ubtl7DfBb_e493Esg90",
-    authDomain: "teamtools-c9f38.firebaseapp.com",
-    databaseURL: "https://teamtools-c9f38-default-rtdb.firebaseio.com",
-    projectId: "teamtools-c9f38",
-    storageBucket: "teamtools-c9f38.appspot.com",
-    messagingSenderId: "572582303921",
-    appId: "1:572582303921:web:a4f7994bfcaaea159aea90",
-    measurementId: "G-X9ZWKFGELQ"
+    "apiKey" : "AIzaSyCXSY5xD4wyy0H8Ubtl7DfBb_e493Esg90",
+    "authDomain" : "teamtools-c9f38.firebaseapp.com",
+    "databaseURL" : "https://teamtools-c9f38-default-rtdb.firebaseio.com",
+    "projectId" : "teamtools-c9f38",
+    "storageBucket" : "teamtools-c9f38.appspot.com",
+    "messagingSenderId" : "572582303921",
+    "appId" : "1:572582303921:web:a4f7994bfcaaea159aea90",
+    "measurementId" : "G-X9ZWKFGELQ"
 }
 firebase = pyrebase.initialize_app(firebaseConfig)
+auth = firebase.auth()
 db = firebase.database()
 
 def sendDataToDb(angle , length, collision):
     #pass
     messageToSend = {'angle': angle, 'length': length, 'collision': collision}
-    db.child('messages').push(messageToSend)
+    db.child('positionHistory').push(messageToSend)
+    
 
 
 
