@@ -21,7 +21,6 @@ auth = firebase.auth()
 db = firebase.database()
 
 def sendDataToDb(angle , length, collision):
-    #pass
     messageToSend = {'angle': angle, 'length': length, 'collision': collision}
     db.child('positionHistory').push(messageToSend)
     
@@ -41,8 +40,7 @@ def sendLoop():
                     angle = dataArr[0]
                     length_mm = dataArr[1]
                     collision = dataArr[2]
-                    #send to db
-                    sendDataToDb(angle,length_mm,collision)
+                    sendDataToDb(angle,length_mm,collision) #send data to db.
                     print(dataArr)
                 bufferReady = True
 
@@ -65,9 +63,7 @@ def readLoop():
 
 
 def setup():
-    
-    #SET UP DB connection
-
+    #setupfucntions for the threads.
     t =threading.Thread(target=readLoop,args=())
     t2 = threading.Thread(target=sendLoop,args=())
     t.start()
