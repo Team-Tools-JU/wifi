@@ -1,10 +1,12 @@
 import serial
 import pyrebase
+from datetime import date
 from time import sleep
 import threading
 ser = serial.Serial ("/dev/ttyS0", 9600)    #Open port with baud rate
 bufferReady = True
 buffer = []
+session_id = datetime.datetime.now()
 
 firebaseConfig = {
     "apiKey" : "AIzaSyCXSY5xD4wyy0H8Ubtl7DfBb_e493Esg90",
@@ -22,7 +24,7 @@ db = firebase.database()
 
 def sendDataToDb(angle , length, collision):
     messageToSend = {'angle': angle, 'length': length, 'collision': collision}
-    db.child('positionHistory').push(messageToSend)
+    db.child(session_id).push(messageToSend)
     
 
 
