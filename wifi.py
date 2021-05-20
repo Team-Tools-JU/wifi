@@ -6,9 +6,8 @@ import threading
 ser = serial.Serial ("/dev/ttyS0", 9600)    #Open port with baud rate
 bufferReady = True
 buffer = []
-dt = datetime.datetime.now()
+session_id =""
 
-session_id = dt.strftime("%Y-%m-%d-%H:%M:%s")
 
 
 firebaseConfig = {
@@ -26,6 +25,7 @@ auth = firebase.auth()
 db = firebase.database()
 
 def sendDataToDb(angle , length, collision):
+    global session_id
     messageToSend = {'angle': angle, 'length': length, 'collision': collision}
     db.child(session_id).push(messageToSend)
     
@@ -35,6 +35,7 @@ def sendDataToDb(angle , length, collision):
 def sendLoop():
     global buffer
     global bufferReady
+    global session_id
     while True:
         if bufferReady:
             if len(buffer):
@@ -47,6 +48,10 @@ def sendLoop():
                     collision = dataArr[2]
                     sendDataToDb(angle,length_mm,collision) #send data to db.
                     print(dataArr)
+                elif len(dataArr) == 1:  #refresh time 
+                    dt = datetime.datetime.now()
+                    session_id = dt.strftime("%Y-%m-%d-%H:%M:%s")
+                    
                 bufferReady = True
 
 
