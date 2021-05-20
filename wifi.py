@@ -29,7 +29,10 @@ def sendDataToDb(angle , length, collision):
     messageToSend = {'angle': angle, 'length': length, 'collision': collision}
     db.child(session_id).push(messageToSend)
     
-
+def updateSessionId():
+    dt = datetime.datetime.now()
+    session_id = dt.strftime("%Y-%m-%d-%H:%M:%s")
+    print(session_id)
 
 
 def sendLoop():
@@ -49,9 +52,7 @@ def sendLoop():
                     sendDataToDb(angle,length_mm,collision) #send data to db.
                     print(dataArr)
                 elif len(dataArr) == 2:  #refresh time 
-                    dt = datetime.datetime.now()
-                    session_id = dt.strftime("%Y-%m-%d-%H:%M:%s")
-                    print(session_id)
+                    updateSessionId() 
                     
                 bufferReady = True
 
