@@ -51,6 +51,7 @@ def sendLoop():
                 elif len(dataArr) == 2:  #refresh time 
                     dt = datetime.datetime.now()
                     session_id = dt.strftime("%Y-%m-%d-%H:%M:%s")
+                    print(session_id)
                     
                 bufferReady = True
 
