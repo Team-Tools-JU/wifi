@@ -48,7 +48,7 @@ def sendLoop():
                     collision = dataArr[2]
                     sendDataToDb(angle,length_mm,collision) #send data to db.
                     print(dataArr)
-                elif len(dataArr) == 1:  #refresh time 
+                elif len(dataArr) == 2:  #refresh time 
                     dt = datetime.datetime.now()
                     session_id = dt.strftime("%Y-%m-%d-%H:%M:%s")
                     
