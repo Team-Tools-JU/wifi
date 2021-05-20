@@ -32,7 +32,7 @@ def sendDataToDb(angle , length, collision):
 def updateSessionId():
     dt = datetime.datetime.now()
     session_id = dt.strftime("%Y-%m-%d-%H:%M:%s")
-    print(session_id)
+    
 
 
 def sendLoop():
@@ -51,8 +51,9 @@ def sendLoop():
                     collision = dataArr[2]
                     sendDataToDb(angle,length_mm,collision) #send data to db.
                     print(dataArr)
-                elif len(dataArr) == 2:  #refresh time 
+                elif len(dataArr) == 2:  #new session 
                     updateSessionId() 
+                    print(session_id)
                     
                 bufferReady = True
 
