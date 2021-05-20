@@ -1,12 +1,15 @@
 import serial
 import pyrebase
-from datetime import date
+import datetime
 from time import sleep
 import threading
 ser = serial.Serial ("/dev/ttyS0", 9600)    #Open port with baud rate
 bufferReady = True
 buffer = []
-session_id = datetime.datetime.now()
+dt = datetime.datetime.now()
+
+session_id = dt.strftime("%Y-%m-%d-%H:%M:%s")
+
 
 firebaseConfig = {
     "apiKey" : "AIzaSyCXSY5xD4wyy0H8Ubtl7DfBb_e493Esg90",
