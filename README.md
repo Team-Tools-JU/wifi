@@ -10,7 +10,7 @@ The program consists of a main program written in Python that establishes the co
 Between these threads, a buffer is implemented to ensure that there is no delay when reading the data.
 The data from the mower is in the form a vector i.e., an angle, distance traveled and a collision boolean that is true in the case that a collision was detected in the movement. By this, it is possible to distinguish a collision from a boundry detection. To send the vector to the database, the function sendDataToDB() is used.
 
-The mower will also notify the WiFi node if a new sessions is started. If that happends the WiFi node will update the current date and time, this will then be used as a session id for the database so that vectors can be grouped by that session id. To update the id , the function updateSessionId() is used.
+The mower will also notify the WiFi node if a new sessions is started. If that happends, the WiFi node will update the current date and time. This will then be used as a session id for the database so that vectors can be grouped by that session id. To update the id , the function updateSessionId() is used.
 
 
 -------------------
