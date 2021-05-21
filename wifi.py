@@ -1,10 +1,14 @@
 import serial
 import pyrebase
+import datetime
 from time import sleep
 import threading
 ser = serial.Serial ("/dev/ttyS0", 9600)    #Open port with baud rate
 bufferReady = True
 buffer = []
+sessionId =""
+
+
 
 firebaseConfig = {
     "apiKey" : "AIzaSyCXSY5xD4wyy0H8Ubtl7DfBb_e493Esg90",
@@ -21,15 +25,20 @@ auth = firebase.auth()
 db = firebase.database()
 
 def sendDataToDb(angle , length, collision):
+    global sessionId
     messageToSend = {'angle': angle, 'length': length, 'collision': collision}
-    db.child('positionHistory').push(messageToSend)
+    db.child(sessionId).push(messageToSend)
     
-
+def updateSessionId():
+    dt = datetime.datetime.now()
+    sessionId = dt.strftime("%Y-%m-%d-%H:%M:%s")
+    
 
 
 def sendLoop():
     global buffer
     global bufferReady
+    global sessionId
     while True:
         if bufferReady:
             if len(buffer):
@@ -42,6 +51,10 @@ def sendLoop():
                     collision = dataArr[2]
                     sendDataToDb(angle,length_mm,collision) #send data to db.
                     print(dataArr)
+                elif len(dataArr) == 2:  #new session 
+                    updateSessionId() 
+                    print(sessionId)
+                    
                 bufferReady = True
 
 
@@ -63,7 +76,7 @@ def readLoop():
 
 
 def setup():
-    #setupfucntions for the threads.
+    #setup functions for the threads.
     t =threading.Thread(target=readLoop,args=())
     t2 = threading.Thread(target=sendLoop,args=())
     t.start()
