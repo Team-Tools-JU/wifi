@@ -33,6 +33,9 @@ def updateSessionId():
     dt = datetime.datetime.now()
     sessionId = dt.strftime("%Y-%m-%d-%H:%M:%s")
     
+def sendCollisionDataToDb(data):
+    messageToSend = {"distance": data}
+    db.child("UltraSonic").update(messageToSend)
 
 
 def sendLoop():
@@ -49,12 +52,14 @@ def sendLoop():
                     angle = dataArr[0]
                     length_mm = dataArr[1]
                     collision = dataArr[2]
-                    sendDataToDb(angle,length_mm,collision) #send data to db.
+                    sendDataToDb(angle,length_mm,collision) #send vector to db.
                     print(dataArr)
                 elif len(dataArr) == 2:  #new session 
                     updateSessionId() 
                     print(sessionId)
                     
+                elif len(dataArr) == 1: # send ultrasonic distance 
+                    sendCollisionDataToDb(dataArr[0])
                 bufferReady = True
 
 
